@@ -7,7 +7,7 @@ col_names = ['engine_id', 'cycle'] + \
 
 # Fix parsing — use whitespace separator and skip bad columns
 df = pd.read_csv(
-    r'C:/Users/aditi/Documents/python/train_FD001.txt',
+    'train_FD001.txt',
     sep=r'\s+',
     header=None,
     names=col_names + ['extra1', 'extra2'],
