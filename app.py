@@ -3,8 +3,19 @@ import duckdb
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
+import subprocess
+import os
 
 st.set_page_config(page_title="Cummins DBU Pipeline Monitor", layout="wide")
+
+# Auto-build database if it doesn't exist
+if not os.path.exists("cummins_pipeline.db"):
+    with st.spinner("Building pipeline database..."):
+        subprocess.run(["python", "generate_data.py"])
+        subprocess.run(["python", "bronze.py"])
+        subprocess.run(["python", "silver.py"])
+        subprocess.run(["python", "gold.py"])
+
 con = duckdb.connect("cummins_pipeline.db")
 
 st.title("Cummins DBU: Engine Sensor Data Pipeline Monitor")
